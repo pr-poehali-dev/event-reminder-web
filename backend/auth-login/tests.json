@@ -1,0 +1,33 @@
+{
+  "tests": [
+    {
+      "name": "Login with valid credentials",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "email": "test@example.com",
+        "password": "password123"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "token": "string",
+        "user": {
+          "id": "number",
+          "email": "string",
+          "full_name": "string"
+        }
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Reject login with invalid email format",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "email": "invalid-email",
+        "password": "password123"
+      },
+      "expectedStatus": 422
+    }
+  ]
+}

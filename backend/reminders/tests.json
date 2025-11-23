@@ -1,0 +1,25 @@
+{
+  "tests": [
+    {
+      "name": "Get reminders with valid token",
+      "method": "GET",
+      "path": "/",
+      "headers": {
+        "X-Auth-Token": "valid-jwt-token"
+      },
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Reject request without auth token",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 401,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

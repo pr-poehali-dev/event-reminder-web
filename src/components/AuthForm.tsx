@@ -7,8 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 
 interface AuthFormProps {
-  onLogin: (email: string, password: string) => void;
-  onRegister: (email: string, password: string, name: string) => void;
+  onLogin: (email: string, password: string) => Promise<void>;
+  onRegister: (email: string, password: string, name: string) => Promise<void>;
 }
 
 export default function AuthForm({ onLogin, onRegister }: AuthFormProps) {
@@ -17,15 +17,20 @@ export default function AuthForm({ onLogin, onRegister }: AuthFormProps) {
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerName, setRegisterName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin(loginEmail, loginPassword);
+    setIsLoading(true);
+    await onLogin(loginEmail, loginPassword);
+    setIsLoading(false);
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    onRegister(registerEmail, registerPassword, registerName);
+    setIsLoading(true);
+    await onRegister(registerEmail, registerPassword, registerName);
+    setIsLoading(false);
   };
 
   return (
@@ -71,9 +76,9 @@ export default function AuthForm({ onLogin, onRegister }: AuthFormProps) {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" disabled={isLoading}>
                   <Icon name="LogIn" className="h-4 w-4 mr-2" />
-                  Войти
+                  {isLoading ? 'Вход...' : 'Войти'}
                 </Button>
               </form>
             </TabsContent>
@@ -111,9 +116,9 @@ export default function AuthForm({ onLogin, onRegister }: AuthFormProps) {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" disabled={isLoading}>
                   <Icon name="UserPlus" className="h-4 w-4 mr-2" />
-                  Создать аккаунт
+                  {isLoading ? 'Создание...' : 'Создать аккаунт'}
                 </Button>
               </form>
             </TabsContent>

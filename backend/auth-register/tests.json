@@ -1,0 +1,35 @@
+{
+  "tests": [
+    {
+      "name": "Register new user successfully",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "email": "test@example.com",
+        "password": "password123",
+        "full_name": "Test User"
+      },
+      "expectedStatus": 201,
+      "expectedBody": {
+        "token": "string",
+        "user": {
+          "id": "number",
+          "email": "string",
+          "full_name": "string"
+        }
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Reject registration with invalid email",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "email": "invalid-email",
+        "password": "password123",
+        "full_name": "Test User"
+      },
+      "expectedStatus": 422
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "tests": [
+    {
+      "name": "Send notification with valid data",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "to_email": "test@example.com",
+        "reminder_title": "Test Reminder",
+        "reminder_date": "2025-01-15",
+        "reminder_time": "14:00",
+        "reminder_description": "This is a test reminder"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "message": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Reject invalid email",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "to_email": "invalid-email",
+        "reminder_title": "Test",
+        "reminder_date": "2025-01-15",
+        "reminder_time": "14:00"
+      },
+      "expectedStatus": 422
+    }
+  ]
+}
